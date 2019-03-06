@@ -42,5 +42,10 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "assets/css/[name].[hash:8].css"
     })
-  ]
+  ],
+  devServer: {
+    historyApiFallback: true,
+    contentBase: './',
+    hot: true
+  }
 };
