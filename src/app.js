@@ -1,4 +1,10 @@
 import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+
 
 class App extends Component {
   constructor() {
@@ -7,9 +13,21 @@ class App extends Component {
   
   render() {
     return(
-      <div>
-        Project Structure
-      </div>
+      <Router>
+        <div>
+          <ul>
+            <li>
+              <Link to="/"> Home </Link>
+            </li>
+            <li>
+              <Link to="/about"> About </Link>
+            </li>
+            <li>
+              <Link to="/team"> Team </Link>
+            </li>
+          </ul>
+        </div>
+      </Router>
   );
 }
 }
