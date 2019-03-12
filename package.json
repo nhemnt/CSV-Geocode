@@ -1,5 +1,5 @@
 {
-  "name": "hemant",
+  "name": "csv-geocode",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --mode development --hot --progress --open"
   },
   "keywords": [],
-  "author": "",
+  "author": "Hemant Negi",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.3.4",
@@ -30,16 +30,15 @@
     "uglifyjs-webpack-plugin": "^2.1.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.1"
+    "webpack-dev-server": "^3.2.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "babel-polyfill": "^6.26.0"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.3.1",
     "extract-css": "^1.2.2",
-    "extract-text-webpack-plugin": "^3.0.2",
     "get-css": "^1.2.7-2",
-    "npm": "^6.9.0",
-    "react-bootstrap": "^0.32.4",
-    "react-router-dom": "^4.3.1",
+    "google-maps": "^3.3.0",
+    "react-router-dom": "^4.3.1"
   }
 }

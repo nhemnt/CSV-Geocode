@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Switch
 } from 'react-router-dom'
-import Home from './js/components/Home'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './assets/css/custom.css'
 import About from './js/components/About'
 import Team from './js/components/Team'
-import Header from './js/components/Header'
+import Geocode from './js/components/Geocode'
 import NotFound from './js/components/NotFoud'
 
 class App extends Component {
@@ -20,9 +20,8 @@ class App extends Component {
     return(
       <Router>
         <div>
-          <Header />
           <Switch>
-            <Route exact path='/' component={Home}></Route>
+            <Route exact path='/' component={Geocode}></Route>
             <Route exact path='/about' component={About}></Route>
             <Route exact path='/team' component={Team}></Route>
             <Route component={NotFound}></Route>
