@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import GoogleMaps from "google-maps";
-GoogleMaps.KEY = "";
+import { googleApiKey }  from '../../../../constant/config'
+GoogleMaps.KEY = googleApiKey;
 GoogleMaps.VERSION = "3.34";
 
 class Geocode extends Component {
