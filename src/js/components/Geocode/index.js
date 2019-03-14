@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import GoogleMaps from "google-maps";
+import {CSVLink} from 'react-csv';
 import { googleApiKey }  from '../../../../constant/config'
 GoogleMaps.KEY = googleApiKey;
 GoogleMaps.VERSION = "3.34";
@@ -14,7 +15,9 @@ class Geocode extends Component {
       jsonFile: null,
       csvData: null,
       csvKeys: null,
-      checkedItems: new Map()
+      checkedItems: new Map(),
+      isFileGeocoded: false,
+      isGeocoding: false,
     }
     this.uploadFile = this.uploadFile.bind(this);
     this.convertJson = this.convertJson.bind(this);
@@ -40,16 +43,15 @@ class Geocode extends Component {
     let columns = Array.from(this.state.checkedItems).filter(a => a[1] == true)
     console.log(columns)
     // temp1.filter(a=> a[1]== true)
-    locations.map(location => {
-      this.geocodeAddress(location,columns);
+    locations.map((location,i) => {
+      this.geocodeAddress(location,columns,i);
     })
     setTimeout(() => {
       console.log(this.geocodedJSON)
     }, 3000);
   }
 
-  geocodeAddress(location, columns) {
-  
+  geocodeAddress(location, columns,i) {
     let address = ''
     columns.map(a => { 
       address = address + location[a[0]] + " "
@@ -63,6 +65,9 @@ class Geocode extends Component {
         // console.log(results[0].geometry.location)
         // console.log(location)
         this.geocodedJSON.push(location);
+        if (this.state.jsonFile.length-1 === i) { 
+          this.setState({isFileGeocoded:true})
+        }
       } else {
         alert("some problem in geocode" + status);
       }
@@ -191,6 +196,8 @@ class Geocode extends Component {
           })}
         </div>
         <button onClick={this.geocodeAddresses}>Geocode CSV</button>
+        {this.state.isFileGeocoded?<div><i className="fa fa-download"></i><CSVLink filename="csvWithLatLon.csv"  data={this.geocodedJSON} >EXPORT FILE</CSVLink></div>:null}
+        
       </div>
     );
   }

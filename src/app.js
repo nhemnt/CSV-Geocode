@@ -5,6 +5,7 @@ import {
   Switch
 } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'font-awesome/css/font-awesome.css'
 import './assets/css/custom.css'
 import About from './js/components/About'
 import Team from './js/components/Team'
