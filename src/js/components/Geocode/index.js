@@ -9,6 +9,7 @@ class Geocode extends Component {
     super();
     this.google = null;
     this.geocoder = null;
+    this.geocodedJSON = []
     this.state = {
       jsonFile: null,
       csvData: null,
@@ -41,11 +42,14 @@ class Geocode extends Component {
     // temp1.filter(a=> a[1]== true)
     locations.map(location => {
       this.geocodeAddress(location,columns);
-    });
+    })
+    setTimeout(() => {
+      console.log(this.geocodedJSON)
+    }, 3000);
   }
 
   geocodeAddress(location, columns) {
-
+  
     let address = ''
     columns.map(a => { 
       address = address + location[a[0]] + " "
@@ -53,9 +57,12 @@ class Geocode extends Component {
     
     this.geocoder.geocode({ address }, (results, status) => {
       if (status == google.maps.GeocoderStatus.OK) {
-        console.log(results)
-        // console.log(results.geometry.viewport.j.j);
-        // console.log(results.geometry.viewport.l.j);
+        
+        location["lat"] = results[0].geometry.location.lat().toFixed(4)
+        location["lon"] = results[0].geometry.location.lng().toFixed(4)
+        // console.log(results[0].geometry.location)
+        // console.log(location)
+        this.geocodedJSON.push(location);
       } else {
         alert("some problem in geocode" + status);
       }
@@ -166,8 +173,7 @@ class Geocode extends Component {
             this.state.csvKeys.map(item => (
               <label key={item} style={{padding: '5px',border: '1px solid #000',margin: '5px'}}>
                 {item}
-                <input style={{marginLeft:'4px'}} type='checkbox' name={item} checked={this.state.checkedItems.get(item)} onChange={this.handleChange} />
-              {/* <Checkbox name={item.name} checked={this.state.checkedItems.get(item.name)} onChange={this.handleChange} /> */}
+                <input style={{marginLeft:'4px'}} type='checkbox' name={item} checked={this.state.checkedItems.get(item)?this.state.checkedItems.get(item): ''} onChange={this.handleChange} />
             </label>
             ))
             :
@@ -176,9 +182,9 @@ class Geocode extends Component {
         </div>
         <div>
         example- 
-          {Array.from(this.state.checkedItems).map((column)=> {
+          {Array.from(this.state.checkedItems).map((column,i)=> {
             return (
-            <span className="mr-2">
+              <span key={i} className="mr-2">
                 {column[1] ? this.state.jsonFile[0][column[0]] : null}   
             </span>
             )   
