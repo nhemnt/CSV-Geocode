@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import GoogleMaps from "google-maps";
 import {CSVLink} from 'react-csv';
-import { googleApiKey }  from '../../../../constant/config'
+import { googleApiKey } from '../../../../constant/config'
+import Markers from './Markers'
+import Routes from './Routes'
+
 GoogleMaps.KEY = googleApiKey;
 GoogleMaps.VERSION = "3.34";
 
@@ -10,7 +13,8 @@ class Geocode extends Component {
     super();
     this.google = null;
     this.geocoder = null;
-    this.geocodedJSON = []
+    this.geocodedJSON = [];
+
     this.state = {
       jsonFile: null,
       csvData: null,
@@ -41,14 +45,9 @@ class Geocode extends Component {
   geocodeAddresses() {
     let locations = this.state.jsonFile
     let columns = Array.from(this.state.checkedItems).filter(a => a[1] == true)
-    console.log(columns)
-    // temp1.filter(a=> a[1]== true)
     locations.map((location,i) => {
       this.geocodeAddress(location,columns,i);
     })
-    setTimeout(() => {
-      console.log(this.geocodedJSON)
-    }, 3000);
   }
 
   geocodeAddress(location, columns,i) {
@@ -62,8 +61,6 @@ class Geocode extends Component {
         
         location["lat"] = results[0].geometry.location.lat().toFixed(4)
         location["lon"] = results[0].geometry.location.lng().toFixed(4)
-        // console.log(results[0].geometry.location)
-        // console.log(location)
         this.geocodedJSON.push(location);
         if (this.state.jsonFile.length-1 === i) { 
           this.setState({isFileGeocoded:true})
@@ -141,6 +138,8 @@ class Geocode extends Component {
     // return str;
   }
   convertJson() { 
+    this.geocodedJSON = [];
+    this.setState({isFileGeocoded:false})
     let csvKeys
     let jsonFile = this.CSV2JSON(this.state.csvData);
     if (jsonFile.length > 0) {
@@ -196,8 +195,17 @@ class Geocode extends Component {
           })}
         </div>
         <button onClick={this.geocodeAddresses}>Geocode CSV</button>
-        {this.state.isFileGeocoded?<div><i className="fa fa-download"></i><CSVLink filename="csvWithLatLon.csv"  data={this.geocodedJSON} >EXPORT FILE</CSVLink></div>:null}
-        
+        {this.state.isFileGeocoded ? <div><i className="fa fa-download"></i><CSVLink filename="csvWithLatLon.csv" data={this.geocodedJSON} >EXPORT FILE</CSVLink></div> : null}
+        {this.state.isFileGeocoded ?
+          <div className="row">
+            <div className="col-md-6">
+            <Markers geocodedData={this.geocodedJSON} />
+            </div>
+            <div className="col-md-6">
+            <Routes geocodedData={this.geocodedJSON} />
+            </div>
+          </div>
+          : null}
       </div>
     );
   }
