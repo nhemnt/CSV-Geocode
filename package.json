@@ -37,9 +37,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "extract-css": "^1.2.2",
     "font-awesome": "^4.7.0",
-    "get-css": "^1.2.7-2",
     "google-maps": "^3.3.0",
     "react-csv": "^1.1.1",
     "react-router-dom": "^4.3.1"

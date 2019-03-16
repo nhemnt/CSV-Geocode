@@ -113,7 +113,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       { from: 'src/assets', to: 'assets' },
-      // { from: 'src/assets/images', to: 'assets/images' }
+      { from: 'src/assets/images', to: 'assets/images' }
     ]), 
     new FriendlyErrorsWebpackPlugin(),
     // new CleanWebpackPlugin(),
